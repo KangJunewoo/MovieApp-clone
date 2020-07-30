@@ -19,3 +19,7 @@
 
 #### Unmount시
 - componentWillUnmount()
+
+### 궁금증들
+- github 페이지가 아닐 경우의 배포는?
+- 여러 페이지로 구성되었다면?
