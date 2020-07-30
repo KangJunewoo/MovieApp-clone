@@ -1,74 +1,52 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// id, name, image, rating으로 된 음식 array
-const foodILike = [
-  {
-    id: 1,
-    name: "Kimchi",
-    image:
-      "http://aeriskitchen.com/wp-content/uploads/2008/09/kimchi_bokkeumbap_02-.jpg",
-    rating: 4.9
-  },
-  {
-    id: 2,
-    name: "Samgyeopsal",
-    image:
-      "https://3.bp.blogspot.com/-hKwIBxIVcQw/WfsewX3fhJI/AAAAAAAAALk/yHxnxFXcfx4ZKSfHS_RQNKjw3bAC03AnACLcBGAs/s400/DSC07624.jpg",
-    rating: 3.9
-  },
-  {
-    id: 3,
-    name: "Bibimbap",
-    image:
-      "http://cdn-image.myrecipes.com/sites/default/files/styles/4_3_horizontal_-_1200x900/public/image/recipes/ck/12/03/bibimbop-ck-x.jpg?itok=RoXlp6Xb",
-    rating: 4.8
-  },
-  {
-    id: 4,
-    name: "Doncasu",
-    image:
-      "https://s3-media3.fl.yelpcdn.com/bphoto/7F9eTTQ_yxaWIRytAu5feA/ls.jpg",
-    rating: 3.8
-  },
-  {
-    id: 5,
-    name: "Kimbap",
-    image:
-      "http://cdn2.koreanbapsang.com/wp-content/uploads/2012/05/DSC_1238r-e1454170512295.jpg",
-    rating: 5.0
+// 함수명은 return
+// 클래스형은 render
+
+// react는 자동으로 class component의 render 메서드를 실행함.
+// (필요하면) es6강의 클래스부분 참조.
+class App extends React.Component{
+  state = {
+    count: 0
+  };
+
+  // setState는 state 설정과 함께 render함수를 다시 호출해줌.
+  // 그래서 this.state.count += 1 이런 식으로 하면 안되는거.
+  add = () =>{
+    // 이것도 js문법인가...?
+    this.setState(current=>({count:current.count + 1}));
+    // this.setState({count:this.state.count+1});
   }
-];
 
-// 기존방식 : 인자로 props넣고 props.name으로 접근.
-function Food({ name, image, rating }) {
-  return (<div>
-    <h2>I like {name}</h2>
-    <h4>rating : {rating} / 5.0</h4>
-    <img src={image} alt={name} />
-  </div>);
-}
+  minus = () =>{
+    this.setState(current=>({count:current.count - 1}));
+    // this.setState({count:this.state.count-1});
+  }
 
-// prop-types.PropTypes import 필요.
-// 이 규칙을 어기면 컴파일되긴 하지만 콘솔에 warning이 든다.
-Food.propTypes={
-  name:PropTypes.string.isRequired,
-  image:PropTypes.string.isRequired,
-  rating:PropTypes.number
-}
+  // 라이프사이클 관련 함수들 : 리드미 참조!
+  componentDidMount(){
+    console.log('component mounted');
+  }
 
-// 모듈화.
-function renderFood(dish) {
-  return <Food name={dish.name} image={dish.image} rating={dish.rating}/>
-}
+  componentDidUpdate(){
+    console.log("component updated");
+  }
 
-// 앱 컴포넌트 정의.
-function App() {
-  return (
-    <div>
-      {foodILike.map(renderFood)}
-    </div>
-  );
+  componentWillUnmount(){
+    console.log('byebye😭');
+  }
+
+  render(){
+    console.log('rendering in progress..');
+    return(
+      <div>
+        <h1>The number is {this.state.count}</h1>
+        <button onClick={this.add}>Add</button>
+        <button onClick={this.minus}>Minus</button>
+      </div>
+    ) 
+  }
 }
 
 export default App;
